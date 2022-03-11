@@ -6,7 +6,6 @@ import math
 
 # Given n, return all primes up to and including n.
 def generate_primes(n: int) -> List[int]:
-    print(n)
     def is_prime(n: int) -> bool:
         nb_divisors = 0
         for i in range(1, math.floor(math.sqrt(n))+1):
