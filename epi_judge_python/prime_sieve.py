@@ -8,10 +8,10 @@ import math
 def generate_primes(n: int) -> List[int]:
     def is_prime(n: int) -> bool:
         nb_divisors = 0
-        for i in range(1, math.floor(math.sqrt(n))+1):
+        for i in range(2, math.floor(math.sqrt(n))+1):
             if n % i == 0:
-                nb_divisors += 1
-        return nb_divisors == 1
+                nb_divisors += 1            
+        return nb_divisors == 0
     
     primes = []
     for i in range(2, n+1):
