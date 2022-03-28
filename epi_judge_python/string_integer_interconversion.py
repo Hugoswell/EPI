@@ -1,10 +1,16 @@
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 
-
 def int_to_string(x: int) -> str:
-    # TODO - you fill in here.
-    return '0'
+    sign = '' if x >= 0 else '-'
+    number = abs(x)
+    result = ''
+    while number:
+        current_digit = number % 10
+        result += str(current_digit)
+        number //= 10
+    result += sign
+    return result[::-1]
 
 
 def string_to_int(s: str) -> int:
@@ -24,3 +30,4 @@ if __name__ == '__main__':
         generic_test.generic_test_main('string_integer_interconversion.py',
                                        'string_integer_interconversion.tsv',
                                        wrapper))
+# print(int_to_string(-123))
