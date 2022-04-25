@@ -3,17 +3,19 @@ from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 import functools, string
 
-def int_to_string(x: int) -> str:
-    negative = False
-    if x < 0:
-        x, negative = -x, True
+# My solution
+def int_to_string(n: int) -> str:
+    negative, n = n < 0, abs(n)
     res = []
-    while True:
-        res.append(chr(ord('0') + x % 10))
-        x //= 10
-        if x == 0:
-            break
-    return ('-' if negative else '') + ''.join(reversed(res))
+    if n == 0:
+        return "0"
+    while n:
+        last_char = chr(ord('0') + n % 10)
+        res.append(last_char)
+        n //= 10
+    if negative:
+        res.append('-')
+    return ''.join(reversed(res))
 
 # EPI solution
 def string_to_int(s: str) -> int:
@@ -43,4 +45,4 @@ if __name__ == '__main__':
         generic_test.generic_test_main('string_integer_interconversion.py',
                                        'string_integer_interconversion.tsv',
                                        wrapper))
-    # string_to_int("123")
+    # print(int_to_string(-123))
