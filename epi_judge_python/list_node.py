@@ -10,6 +10,9 @@ class ListNode:
                 return False
             a, b = a.next, b.next
         return a is None and b is None
+    
+    def __hash__(self):
+        return hash(id(self))
 
     def __repr__(self):
         node = self

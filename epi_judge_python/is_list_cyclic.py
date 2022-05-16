@@ -6,11 +6,42 @@ from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
 
+# with a set
+# def has_cycle(head: ListNode) -> Optional[ListNode]:
+#     iter = head
+#     visited = set()
+#     while iter:
+#         if iter in visited:
+#             return iter
+#         visited.add(iter)
+#         iter = iter.next
+#     return None
 
+# With slow and fast pointers
 def has_cycle(head: ListNode) -> Optional[ListNode]:
-    # TODO - you fill in here.
-    return None
+    def len_cycle(begin: ListNode) -> int:
+        start, count = begin, 1
+        while True:
+            start = start.next
+            if start is begin:
+                return count
+            count += 1
 
+    slow = fast = head
+    while fast and fast.next:
+        slow, fast = slow.next, fast.next.next
+        # Cycle
+        if slow is fast:
+            b = head
+            for _ in range(len_cycle(slow)):
+                b = b.next
+            
+            a = head
+            while a is not b:
+                a, b = a.next, b.next
+            return a
+    # No cycle
+    return None
 
 @enable_executor_hook
 def has_cycle_wrapper(executor, head, cycle_idx):
@@ -63,3 +94,4 @@ if __name__ == '__main__':
         generic_test.generic_test_main('is_list_cyclic.py',
                                        'is_list_cyclic.tsv',
                                        has_cycle_wrapper))
+
