@@ -1,17 +1,12 @@
 from test_framework import generic_test
 
-
 def reverse_bits(x: int) -> int:
     result = 0
-    list = []
     for i in range(64):
-        temp = x >> i
-        list.append(temp & 1)
-    for j in range(64):
+        shifted = x >> i
         result <<= 1
-        result |= list[j]
+        result |= shifted & 1
     return result
-
 
 if __name__ == '__main__':
     exit(
