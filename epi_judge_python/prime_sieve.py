@@ -3,22 +3,15 @@ from typing import List
 from test_framework import generic_test
 import math
 
-
-# Given n, return all primes up to and including n.
+# My solution O(nloglog(n))T, O(n)S
 def generate_primes(n: int) -> List[int]:
-    def is_prime(n: int) -> bool:
-        nb_divisors = 0
-        for i in range(2, math.floor(math.sqrt(n))+1):
-            if n % i == 0:
-                nb_divisors += 1            
-        return nb_divisors == 0
-    
-    primes = []
-    for i in range(2, n+1):
-        if is_prime(i):
-            primes.append(i)
-    return primes
-        
+    result, primes = [], [False, False] + [True] * (n - 1)
+    for i in range(2, n + 1):
+        if primes[i]:
+            for j in range(2 * i, n + 1, i):
+                primes[j] = False
+            result.append(i)
+    return result
 
 
 if __name__ == '__main__':
