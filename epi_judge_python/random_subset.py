@@ -6,12 +6,28 @@ from test_framework.random_sequence_checker import (
     binomial_coefficient, check_sequence_is_uniformly_random,
     compute_combination_idx, run_func_with_retries)
 from test_framework.test_utils import enable_executor_hook
+import random
 
-
+# My solution O(n)T | O(n)S
 def random_subset(n: int, k: int) -> List[int]:
-    # TODO - you fill in here.
-    return []
+    perm = [0] * n
+    for i in range(n):
+        perm[i] = i
+    for i in range(k):
+        randomIdx = random.randint(i, len(perm) - 1)
+        perm[i], perm[randomIdx] = perm[randomIdx], perm[i]
+    return perm[0:k]
 
+# EPI solution O(k)T | O(k)S
+def random_subset(n: int, k: int) -> List[int]:
+    dico = {}
+    for i in range(k):
+        rand_idx = random.randrange(i, n)
+        rand_idx_mapped = dico.get(rand_idx, rand_idx)
+        i_mapped = dico.get(i, i)
+        dico[rand_idx] = i_mapped
+        dico[i] = rand_idx_mapped
+    return [dico[i] for i in range(k)]
 
 @enable_executor_hook
 def random_subset_wrapper(executor, n, k):
